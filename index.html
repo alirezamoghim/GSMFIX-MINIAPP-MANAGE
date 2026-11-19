@@ -608,11 +608,64 @@
                 <div id="debtorsCardsContainer" class="space-y-2.5"></div>
             </section>
 
-            <!-- ================= تب ۶: مدیریت، اتصال ربات تلگرام، تعرفه‌ها و بکاپ (MANAGEMENT) ================= -->
+            <!-- ================= تب ۶: مدیریت، فضای کاری تیمی و همکاران (MANAGEMENT) ================= -->
             <section id="view-management" class="page-view hidden space-y-4">
                 <div class="bg-white dark:bg-darkSurface border border-slate-200 dark:border-darkBorder rounded-xl p-3.5 shadow-eu-card transition-colors">
-                    <h1 class="text-sm font-black text-slate-900 dark:text-white">مدیریت اتصال ربات تلگرام، تعرفه‌ها و تیم فنی</h1>
-                    <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">پیکربندی ارتباط با ربات تلگرام، مدیریت کاتالوگ و پشتیبان‌گیری</p>
+                    <h1 class="text-sm font-black text-slate-900 dark:text-white">فضای کاری تیمی آنلاین، ربات تلگرام و تعرفه‌ها</h1>
+                    <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">دعوت همکاران با کد اختصاصی، همگام‌سازی لحظه‌ای داده‌ها و مدیریت تعرفه</p>
+                </div>
+
+                <!-- باکس فضای کاری تیمی و جوین دادن همکاران (Online Team Workspace) -->
+                <div class="bg-white dark:bg-darkSurface border border-indigo-200 dark:border-indigo-800/80 rounded-xl p-3.5 shadow-eu-card space-y-3 transition-colors">
+                    <div class="flex justify-between items-center border-b border-slate-100 dark:border-darkBorder pb-2">
+                        <div class="flex items-center gap-2">
+                            <span class="w-7 h-7 rounded-lg bg-indigo-600 text-white flex items-center justify-center font-black text-xs">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+                            </span>
+                            <div>
+                                <h2 class="text-xs font-black text-slate-900 dark:text-white">فضای کاری مشترک آنلاین (دعوت همکاران)</h2>
+                                <span id="workspaceSyncStatusText" class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400">همگام‌سازی زنده کل داده‌ها فعال است</span>
+                            </div>
+                        </div>
+                        <span id="onlineMembersCountBadge" class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/70 text-euEmerald dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">1 عضو آنلاین</span>
+                    </div>
+
+                    <!-- نمایش و کپی کد دعوت / شناسه فضای کاری -->
+                    <div class="bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800/80 rounded-xl p-2.5 space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="text-[10px] font-bold text-indigo-900 dark:text-indigo-200">کد دعوت اختصاصی مجموعه شما:</span>
+                            <span id="activeWorkspaceCodeDisplay" dir="ltr" class="font-mono font-black text-xs bg-white dark:bg-darkSurface text-indigo-600 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-700 px-2.5 py-0.5 rounded-lg select-all">GSM-MAIN</span>
+                        </div>
+                        <div class="grid grid-cols-2 gap-1.5">
+                            <button type="button" onclick="copyWorkspaceInviteLink()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-[11px] py-2 px-2.5 rounded-lg flex items-center justify-center gap-1 transition-all active:scale-95">
+                                <span>کپی لینک دعوت همکار</span>
+                            </button>
+                            <button type="button" onclick="copyWorkspaceCodeOnly()" class="bg-white dark:bg-darkSurface hover:bg-indigo-100 border border-indigo-200 dark:border-indigo-700 text-indigo-700 dark:text-indigo-300 font-bold text-[11px] py-2 px-2.5 rounded-lg flex items-center justify-center gap-1 transition-all active:scale-95">
+                                <span>کپی کد اتاق</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- پیوستن همکار به فضای کاری (Join Workspace) -->
+                    <form onsubmit="handleJoinWorkspace(event)" class="space-y-2 bg-slate-50 dark:bg-darkCard border border-slate-200 dark:border-darkBorder rounded-xl p-2.5">
+                        <label class="block text-[10px] font-extrabold text-slate-700 dark:text-slate-300">ورود همکار جدید یا اتصال به فضای کاری دیگر:</label>
+                        <div class="grid grid-cols-2 gap-2">
+                            <input type="text" id="inp-member-name" required placeholder="نام و نقش همکار (مثال: علی - پذیرش)" class="bg-white dark:bg-darkSurface border border-slate-300 dark:border-darkBorder rounded-lg px-2.5 py-1.5 text-[11px] text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-indigo-500">
+                            <input type="text" id="inp-join-workspace-code" required dir="ltr" placeholder="کد اتاق (مثال: GSM-MAIN)" class="bg-white dark:bg-darkSurface border border-slate-300 dark:border-darkBorder rounded-lg px-2.5 py-1.5 text-[11px] font-mono uppercase text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-indigo-500">
+                        </div>
+                        <button type="submit" class="w-full bg-slate-800 dark:bg-indigo-600 hover:bg-slate-900 dark:hover:bg-indigo-700 text-white font-bold text-[11px] py-2 rounded-lg transition-all">
+                            اتصال و جوین شدن در فضای کاری آنلاین ✓
+                        </button>
+                    </form>
+
+                    <!-- لیست همکاران عضو شده در این فضای کاری -->
+                    <div class="space-y-1.5">
+                        <div class="flex justify-between items-center">
+                            <span class="text-[10px] font-bold text-slate-500 dark:text-slate-400">همکاران متصل به این مجموعه:</span>
+                            <span id="currentOperatorBadge" class="text-[10px] font-bold text-euEmerald dark:text-emerald-400">شما: مدیر مجموعه</span>
+                        </div>
+                        <div id="workspaceMembersList" class="space-y-1.5 max-h-40 overflow-y-auto"></div>
+                    </div>
                 </div>
 
                 <!-- باکس تنظیمات و اتصال به ربات تلگرام -->
@@ -851,6 +904,10 @@
                     <div class="flex justify-between">
                         <span class="text-slate-500 dark:text-slate-400">مسئول / تعمیرکار:</span>
                         <span id="sheetTech" class="font-bold text-euEmerald dark:text-emerald-400">-</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-slate-500 dark:text-slate-400">ثبت‌کننده پذیرش:</span>
+                        <span id="sheetCreatedBy" class="font-bold text-indigo-600 dark:text-indigo-400">-</span>
                     </div>
                     <div class="flex justify-between">
                         <span class="text-slate-500 dark:text-slate-400">تاریخ ورود / خروج:</span>
@@ -1337,6 +1394,121 @@
         let currentChecklistState = {};
         let selectedPatternPoints = [];
 
+        // ================= مدیریت فضای کاری آنلاین و همکاران =================
+        let activeWorkspaceCode = 'GSM-MAIN';
+        let currentMemberProfile = {
+            id: 'op_' + Math.random().toString(36).substring(2, 9),
+            name: 'مدیر مجموعه',
+            role: 'مدیر کل'
+        };
+        let workspaceMembers = [];
+
+        function initWorkspaceFromUrlOrMemory() {
+            try {
+                const params = new URLSearchParams(window.location.search);
+                const joinParam = params.get('join') || params.get('ws');
+                if (joinParam && joinParam.trim()) {
+                    activeWorkspaceCode = joinParam.trim().toUpperCase();
+                } else if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe?.start_param) {
+                    const sp = window.Telegram.WebApp.initDataUnsafe.start_param;
+                    if (sp.toUpperCase().startsWith('JOIN_')) {
+                        activeWorkspaceCode = sp.substring(5).toUpperCase();
+                    }
+                }
+            } catch (e) {}
+
+            const tgCtx = getTelegramContext();
+            if (tgCtx.user) {
+                const fullName = [tgCtx.user.first_name, tgCtx.user.last_name].filter(Boolean).join(' ');
+                if (fullName) {
+                    currentMemberProfile.name = fullName;
+                    currentMemberProfile.id = 'tg_' + tgCtx.user.id;
+                }
+            }
+
+            const codeDisplay = document.getElementById('activeWorkspaceCodeDisplay');
+            const joinInp = document.getElementById('inp-join-workspace-code');
+            const nameInp = document.getElementById('inp-member-name');
+            const opBadge = document.getElementById('currentOperatorBadge');
+            if (codeDisplay) codeDisplay.innerText = activeWorkspaceCode;
+            if (joinInp) joinInp.value = activeWorkspaceCode;
+            if (nameInp) nameInp.value = currentMemberProfile.name;
+            if (opBadge) opBadge.innerText = `شما: ${currentMemberProfile.name}`;
+        }
+
+        function copyWorkspaceInviteLink() {
+            const baseUrl = window.location.origin + window.location.pathname;
+            const inviteUrl = `${baseUrl}?join=${encodeURIComponent(activeWorkspaceCode)}`;
+            const inviteMsg = `سلام همکار عزیز؛\nبرای اتصال آنلاین به پنل پذیرش و تعمیرات GSMFIX روی لینک زیر بزنید:\n🔗 ${inviteUrl}\n🔑 کد اتاق مشترک: ${activeWorkspaceCode}`;
+            copyTextSafe(inviteMsg, 'لینک و کد دعوت همکار کپی شد!');
+        }
+
+        function copyWorkspaceCodeOnly() {
+            copyTextSafe(activeWorkspaceCode, `کد اتاق ${activeWorkspaceCode} کپی شد!`);
+        }
+
+        async function handleJoinWorkspace(e) {
+            e.preventDefault();
+            triggerHaptic('medium');
+            const nameVal = (document.getElementById('inp-member-name')?.value || '').trim();
+            const codeVal = (document.getElementById('inp-join-workspace-code')?.value || '').trim().toUpperCase();
+            if (!nameVal || !codeVal) return;
+
+            currentMemberProfile.name = nameVal;
+            const isSwitchingRoom = codeVal !== activeWorkspaceCode;
+            activeWorkspaceCode = codeVal;
+
+            const codeDisplay = document.getElementById('activeWorkspaceCodeDisplay');
+            const opBadge = document.getElementById('currentOperatorBadge');
+            if (codeDisplay) codeDisplay.innerText = activeWorkspaceCode;
+            if (opBadge) opBadge.innerText = `شما: ${currentMemberProfile.name}`;
+
+            if (window.cloudSync && window.cloudSync.switchWorkspace) {
+                await window.cloudSync.switchWorkspace(activeWorkspaceCode, currentMemberProfile, isSwitchingRoom);
+            }
+            renderWorkspaceMembersUI();
+            showToast(`با نام «${nameVal}» به اتاق ${activeWorkspaceCode} متصل شدید ✓`);
+        }
+
+        function renderWorkspaceMembersUI() {
+            const listEl = document.getElementById('workspaceMembersList');
+            const countBadge = document.getElementById('onlineMembersCountBadge');
+            if (!listEl) return;
+
+            const mergedMap = new Map();
+            mergedMap.set(currentMemberProfile.id, {
+                ...currentMemberProfile,
+                online: true,
+                lastSeen: Date.now()
+            });
+            workspaceMembers.forEach(m => {
+                if (m && m.id) {
+                    mergedMap.set(m.id, m);
+                }
+            });
+
+            const allMembers = Array.from(mergedMap.values());
+            if (countBadge) {
+                countBadge.innerText = `${allMembers.length} همکار متصل`;
+            }
+
+            listEl.innerHTML = allMembers.map(m => {
+                const isMe = m.id === currentMemberProfile.id;
+                return `
+                    <div class="bg-slate-50 dark:bg-darkCard border border-slate-200 dark:border-darkBorder rounded-lg px-2.5 py-2 flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                            <div>
+                                <span class="text-xs font-extrabold text-slate-900 dark:text-white">${m.name}</span>
+                                ${isMe ? '<span class="text-[9px] font-bold bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 px-1.5 py-0.5 rounded mr-1">شما</span>' : ''}
+                            </div>
+                        </div>
+                        <span class="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 font-bold">آنلاین</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
         let orders = [
             {
                 id: 101,
@@ -1349,6 +1521,7 @@
                 imei: '354892104482190',
                 passcode: 'الگو: 1→2→3→5→7→8→9',
                 technician: 'مجید',
+                createdBy: 'مدیر مجموعه',
                 services: ['تعمیر مدار شارژ و سوکت شارژ', 'تعویض باتری'],
                 notes: 'دستگاه خاموش آورده شد، سوکت شارژ اتصالی دارد و باتری باد کرده است.',
                 entryDate: getPersianDateString(-1),
@@ -1957,6 +2130,7 @@
                 imei,
                 passcode,
                 technician,
+                createdBy: currentMemberProfile.name || 'مدیر مجموعه',
                 services: servicesToSave,
                 notes,
                 entryDate,
@@ -2260,6 +2434,7 @@
             phoneLink.href = `tel:${order.phone}`;
             document.getElementById('sheetWhatsappBtn').href = buildWhatsappUrl(order.phone, buildCustomerMessage(order));
             document.getElementById('sheetTech').innerText = order.technician;
+            document.getElementById('sheetCreatedBy').innerText = order.createdBy || 'مدیر مجموعه';
             document.getElementById('sheetDates').innerText = `${order.entryDate} ← ${order.exitDate}`;
             document.getElementById('sheetPasscode').innerText = `${order.passcode} | IMEI: ${order.imei}`;
 
@@ -2474,6 +2649,7 @@
 
         // ================= مدیریت و کاتالوگ خدمات =================
         function renderManagement() {
+            renderWorkspaceMembersUI();
             const swOrders = orders.filter(o => o.category === 'software');
             const swActive = swOrders.filter(o => o.status !== 'تحویل شده').length;
             const swRev = swOrders.reduce((s, o) => s + (Number(o.cost) || 0), 0);
@@ -2679,13 +2855,14 @@
         window.addEventListener('DOMContentLoaded', () => {
             initThemeOnLoad();
             initTelegramIntegration();
+            initWorkspaceFromUrlOrMemory();
             document.getElementById('headerPersianDate').innerText = getPersianDateString(0);
             renderDashboard();
             initReceptionForm();
         });
     </script>
 
-    <!-- ================= ماژول همگام‌سازی ابری لحظه‌ای ================= -->
+    <!-- ================= ماژول همگام‌سازی ابری لحظه‌ای و فضای کاری تیمی ================= -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
@@ -2701,7 +2878,7 @@
                 badge.className = 'flex items-center gap-1 bg-emerald-500/20 border border-emerald-500/40 px-2 py-0.5 rounded-full shrink-0';
                 dot.className = 'w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse';
                 text.className = 'text-[9px] font-bold text-emerald-300';
-                text.innerText = 'ابری فعال';
+                text.innerText = `آنلاین • ${activeWorkspaceCode}`;
             } else {
                 badge.className = 'flex items-center gap-1 bg-slate-800 border border-slate-700 px-2 py-0.5 rounded-full shrink-0';
                 dot.className = 'w-1.5 h-1.5 rounded-full bg-slate-400';
@@ -2735,79 +2912,124 @@
                     return;
                 }
 
-                const ordersColRef = collection(db, 'artifacts', appId, 'public', 'data', 'gsmfix_orders');
-                const configDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'gsmfix_config', 'main');
+                let unsubConfig = null;
+                let unsubOrders = null;
+                let unsubMembers = null;
 
-                window.cloudSync = {
-                    saveOrder: async (orderObj) => {
-                        if (!auth.currentUser) return;
-                        try {
-                            const orderRef = doc(db, 'artifacts', appId, 'public', 'data', 'gsmfix_orders', String(orderObj.id));
-                            await setDoc(orderRef, orderObj);
-                        } catch (err) {
-                            console.error('Error saving order:', err);
-                        }
-                    },
-                    deleteOrder: async (orderId) => {
-                        if (!auth.currentUser) return;
-                        try {
-                            const orderRef = doc(db, 'artifacts', appId, 'public', 'data', 'gsmfix_orders', String(orderId));
-                            await deleteDoc(orderRef);
-                        } catch (err) {
-                            console.error('Error deleting order:', err);
-                        }
-                    },
-                    saveConfig: async () => {
-                        if (!auth.currentUser) return;
-                        try {
-                            await setDoc(configDocRef, {
-                                hardwareTechnicians,
-                                hardwareServicesList,
-                                softwareServicesList,
-                                updatedAt: Date.now()
-                            });
-                        } catch (err) {
-                            console.error('Error saving config:', err);
-                        }
-                    }
-                };
+                function bindWorkspaceListeners(wsCode, seedIfEmpty = true) {
+                    if (unsubConfig) unsubConfig();
+                    if (unsubOrders) unsubOrders();
+                    if (unsubMembers) unsubMembers();
 
-                onSnapshot(configDocRef, async (snap) => {
-                    if (snap.exists()) {
-                        const data = snap.data();
-                        if (Array.isArray(data.hardwareTechnicians)) hardwareTechnicians = data.hardwareTechnicians;
-                        if (Array.isArray(data.hardwareServicesList)) hardwareServicesList = data.hardwareServicesList;
-                        if (Array.isArray(data.softwareServicesList)) softwareServicesList = data.softwareServicesList;
-                        if (window.refreshAllViewsFromCloud) window.refreshAllViewsFromCloud();
-                    } else {
-                        await window.cloudSync.saveConfig();
-                    }
-                }, (error) => {
-                    console.error('Config sync error:', error);
-                });
+                    const safeWs = (wsCode || 'GSM-MAIN').replace(/[^A-Z0-9_-]/gi, '').toUpperCase() || 'GSM-MAIN';
+                    const ordersColRef = collection(db, 'artifacts', appId, 'public', 'data', `gsmfix_orders_${safeWs}`);
+                    const membersColRef = collection(db, 'artifacts', appId, 'public', 'data', `gsmfix_members_${safeWs}`);
+                    const configDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'gsmfix_config', safeWs);
 
-                let seededInitialOrders = false;
-                onSnapshot(ordersColRef, async (snapshot) => {
-                    setCloudBadge(true);
-                    if (snapshot.empty && !seededInitialOrders) {
-                        seededInitialOrders = true;
-                        for (const sampleOrder of orders) {
-                            await window.cloudSync.saveOrder(sampleOrder);
+                    window.cloudSync = {
+                        saveOrder: async (orderObj) => {
+                            if (!auth.currentUser) return;
+                            try {
+                                const orderRef = doc(db, 'artifacts', appId, 'public', 'data', `gsmfix_orders_${safeWs}`, String(orderObj.id));
+                                await setDoc(orderRef, orderObj);
+                            } catch (err) {
+                                console.error('Error saving order:', err);
+                            }
+                        },
+                        deleteOrder: async (orderId) => {
+                            if (!auth.currentUser) return;
+                            try {
+                                const orderRef = doc(db, 'artifacts', appId, 'public', 'data', `gsmfix_orders_${safeWs}`, String(orderId));
+                                await deleteDoc(orderRef);
+                            } catch (err) {
+                                console.error('Error deleting order:', err);
+                            }
+                        },
+                        saveConfig: async () => {
+                            if (!auth.currentUser) return;
+                            try {
+                                await setDoc(configDocRef, {
+                                    hardwareTechnicians,
+                                    hardwareServicesList,
+                                    softwareServicesList,
+                                    updatedAt: Date.now()
+                                });
+                            } catch (err) {
+                                console.error('Error saving config:', err);
+                            }
+                        },
+                        registerMemberPresence: async (memberObj) => {
+                            if (!auth.currentUser || !memberObj) return;
+                            try {
+                                const mRef = doc(db, 'artifacts', appId, 'public', 'data', `gsmfix_members_${safeWs}`, String(memberObj.id));
+                                await setDoc(mRef, {
+                                    id: memberObj.id,
+                                    name: memberObj.name,
+                                    role: memberObj.role || 'همکار',
+                                    lastSeen: Date.now()
+                                });
+                            } catch (err) {
+                                console.error('Error registering member:', err);
+                            }
+                        },
+                        switchWorkspace: async (newWsCode, memberObj, isNewRoom) => {
+                            bindWorkspaceListeners(newWsCode, !isNewRoom);
+                            await window.cloudSync.registerMemberPresence(memberObj);
                         }
-                        return;
-                    }
-                    seededInitialOrders = true;
-                    const cloudOrders = [];
-                    snapshot.forEach((docSnap) => {
-                        cloudOrders.push(docSnap.data());
+                    };
+
+                    window.cloudSync.registerMemberPresence(currentMemberProfile);
+
+                    unsubMembers = onSnapshot(membersColRef, (snap) => {
+                        const list = [];
+                        snap.forEach((docSnap) => {
+                            list.push(docSnap.data());
+                        });
+                        workspaceMembers = list;
+                        renderWorkspaceMembersUI();
+                    }, (err) => {
+                        console.error('Members sync error:', err);
                     });
-                    cloudOrders.sort((a, b) => (Number(b.id) || 0) - (Number(a.id) || 0));
-                    orders = cloudOrders;
-                    if (window.refreshAllViewsFromCloud) window.refreshAllViewsFromCloud();
-                }, (error) => {
-                    console.error('Orders sync error:', error);
-                    setCloudBadge(false);
-                });
+
+                    unsubConfig = onSnapshot(configDocRef, async (snap) => {
+                        if (snap.exists()) {
+                            const data = snap.data();
+                            if (Array.isArray(data.hardwareTechnicians)) hardwareTechnicians = data.hardwareTechnicians;
+                            if (Array.isArray(data.hardwareServicesList)) hardwareServicesList = data.hardwareServicesList;
+                            if (Array.isArray(data.softwareServicesList)) softwareServicesList = data.softwareServicesList;
+                            if (window.refreshAllViewsFromCloud) window.refreshAllViewsFromCloud();
+                        } else {
+                            await window.cloudSync.saveConfig();
+                        }
+                    }, (error) => {
+                        console.error('Config sync error:', error);
+                    });
+
+                    let seededInitialOrders = false;
+                    unsubOrders = onSnapshot(ordersColRef, async (snapshot) => {
+                        setCloudBadge(true);
+                        if (snapshot.empty && !seededInitialOrders && seedIfEmpty && safeWs === 'GSM-MAIN') {
+                            seededInitialOrders = true;
+                            for (const sampleOrder of orders) {
+                                await window.cloudSync.saveOrder(sampleOrder);
+                            }
+                            return;
+                        }
+                        seededInitialOrders = true;
+                        const cloudOrders = [];
+                        snapshot.forEach((docSnap) => {
+                            cloudOrders.push(docSnap.data());
+                        });
+                        cloudOrders.sort((a, b) => (Number(b.id) || 0) - (Number(a.id) || 0));
+                        orders = cloudOrders;
+                        if (window.refreshAllViewsFromCloud) window.refreshAllViewsFromCloud();
+                    }, (error) => {
+                        console.error('Orders sync error:', error);
+                        setCloudBadge(false);
+                    });
+                }
+
+                bindWorkspaceListeners(activeWorkspaceCode, true);
 
             } catch (err) {
                 console.error('Cloud init failed:', err);
