@@ -151,9 +151,9 @@
                 <span class="text-slate-600">•</span>
                 <span id="headerPersianDate" class="font-mono text-slate-300">...</span>
             </div>
-            <div id="cloudStatusBadge" class="flex items-center gap-1 bg-amber-500/15 border border-amber-500/30 px-2 py-0.5 rounded-full shrink-0">
-                <span id="cloudStatusDot" class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span>
-                <span id="cloudStatusText" class="text-[9px] font-bold text-amber-300">اتصال ابری...</span>
+            <div id="cloudStatusBadge" class="flex items-center gap-1 bg-emerald-500/20 border border-emerald-500/40 px-2 py-0.5 rounded-full shrink-0">
+                <span id="cloudStatusDot" class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span id="cloudStatusText" class="text-[9px] font-bold text-emerald-300">ذخیره‌سازی فعال</span>
             </div>
         </div>
 
@@ -228,6 +228,17 @@
 
             <!-- ================= تب ۱: داشبورد (DASHBOARD) ================= -->
             <section id="view-dashboard" class="page-view space-y-4">
+
+                <!-- هشدار راهنمای اتصال مستقیم ربات در صورتی که توکن تنظیم نشده باشد -->
+                <div id="botTokenAlertBanner" onclick="navigateTo('management')" class="bg-sky-50 dark:bg-sky-950/60 border border-sky-300 dark:border-sky-800 rounded-xl p-3 flex items-center justify-between gap-2 cursor-pointer shadow-sm">
+                    <div class="flex items-center gap-2">
+                        <span class="text-base">✈️</span>
+                        <div>
+                            <div class="text-xs font-black text-sky-900 dark:text-sky-200">تنظیم ارسال مستقیم قبض به چت تلگرام</div>
+                            <div class="text-[10px] text-sky-700 dark:text-sky-300">برای دریافت فوری قبض‌ها در چت ربات، توکن ربات خود را یک‌بار در بخش مدیریت وارد کنید ←</div>
+                        </div>
+                    </div>
+                </div>
 
                 <div class="bg-white dark:bg-darkSurface border border-slate-200 dark:border-darkBorder rounded-xl p-3 shadow-eu-card space-y-2.5 transition-colors">
                     <div class="flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400">
@@ -330,20 +341,6 @@
                         <button onclick="openGlobalSearch()" class="text-[11px] font-bold text-euBlue dark:text-blue-400 hover:underline">جستجو و مشاهده همه ←</button>
                     </div>
                     <div id="dashboardRecentList" class="space-y-2"></div>
-                </div>
-
-                <!-- باکس راهنمای خدمات و ربات تلگرام -->
-                <div class="bg-white dark:bg-darkSurface border border-slate-200 dark:border-darkBorder rounded-xl p-3.5 shadow-eu-card space-y-2.5 transition-colors">
-                    <div class="flex items-center justify-between border-b border-slate-100 dark:border-darkBorder pb-2">
-                        <div class="flex items-center gap-1.5">
-                            <span class="text-sm">🤖</span>
-                            <h3 class="text-xs font-extrabold text-slate-800 dark:text-white">آماده اتصال به ربات تلگرام (Bot API)</h3>
-                        </div>
-                        <button onclick="navigateTo('management')" class="text-[10px] font-bold text-euBlue dark:text-blue-400 hover:underline">تنظیمات اتصال ←</button>
-                    </div>
-                    <p class="text-[11px] text-slate-600 dark:text-slate-300 leading-relaxed">
-                        این مینی‌اپ از <span class="font-mono font-bold text-euBlue dark:text-blue-400">Telegram.WebApp.sendData</span> و <span class="font-mono font-bold text-euEmerald dark:text-emerald-400">Webhook</span> پشتیبانی می‌کند. با زدن دکمه «ارسال به ربات تلگرام» در هر قبض، اطلاعات کامل به ربات شما ارسال می‌شود.
-                    </p>
                 </div>
             </section>
 
@@ -611,11 +608,57 @@
             <!-- ================= تب ۶: مدیریت، فضای کاری تیمی و همکاران (MANAGEMENT) ================= -->
             <section id="view-management" class="page-view hidden space-y-4">
                 <div class="bg-white dark:bg-darkSurface border border-slate-200 dark:border-darkBorder rounded-xl p-3.5 shadow-eu-card transition-colors">
-                    <h1 class="text-sm font-black text-slate-900 dark:text-white">فضای کاری تیمی آنلاین، ربات تلگرام و تعرفه‌ها</h1>
-                    <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">دعوت همکاران با کد اختصاصی، همگام‌سازی لحظه‌ای داده‌ها و مدیریت تعرفه</p>
+                    <h1 class="text-sm font-black text-slate-900 dark:text-white">اتصال مستقیم به ربات تلگرام، فضای کاری تیمی و تعرفه‌ها</h1>
+                    <p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">تنظیم ارسال آنی قبض به چت تلگرام، دعوت همکاران و مدیریت تعرفه</p>
                 </div>
 
-                <!-- باکس فضای کاری تیمی و جوین دادن همکاران (Online Team Workspace) -->
+                <!-- باکس تنظیمات و اتصال مستقیم به ربات تلگرام -->
+                <div class="bg-white dark:bg-darkSurface border border-sky-200 dark:border-sky-800/80 rounded-xl p-3.5 shadow-eu-card space-y-3 transition-colors">
+                    <div class="flex justify-between items-center border-b border-slate-100 dark:border-darkBorder pb-2">
+                        <div class="flex items-center gap-2">
+                            <span class="w-7 h-7 rounded-lg bg-sky-500 text-white flex items-center justify-center">
+                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
+                            </span>
+                            <div>
+                                <h2 class="text-xs font-black text-slate-900 dark:text-white">ارسال مستقیم قبض به چت ربات تلگرام</h2>
+                                <span id="tgEnvStatusText" class="text-[10px] font-bold text-sky-600 dark:text-sky-400">در حال بررسی محیط تلگرام...</span>
+                            </div>
+                        </div>
+                        <span id="tgInitDataBadge" class="text-[9px] font-mono font-bold px-2 py-0.5 rounded bg-slate-100 dark:bg-darkCard text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-darkBorder">Direct API</span>
+                    </div>
+
+                    <div id="tgUserInfoCard" class="bg-slate-50 dark:bg-darkCard border border-slate-200 dark:border-darkBorder rounded-lg p-2.5 text-[11px] space-y-1">
+                        <div class="flex justify-between">
+                            <span class="text-slate-500 dark:text-slate-400">کاربر تلگرام:</span>
+                            <span id="tgFullUserLabel" class="font-bold text-slate-900 dark:text-white">باز شده در مرورگر</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-500 dark:text-slate-400">شناسه عددی شما (Chat ID):</span>
+                            <span id="tgUserIdLabel" class="font-mono font-bold text-sky-600 dark:text-sky-400">-</span>
+                        </div>
+                    </div>
+
+                    <form onsubmit="saveTelegramBotConfig(event)" class="space-y-2.5">
+                        <div>
+                            <label class="block text-[10px] font-extrabold text-slate-700 dark:text-slate-200 mb-1">۱. توکن ربات تلگرام (Bot Token از BotFather) — <span class="text-euEmerald">برای ارسال مستقیم قبض بدون سرور</span>:</label>
+                            <input type="text" id="inp-bot-token" dir="ltr" placeholder="1234567890:AAFxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" class="w-full bg-slate-50 dark:bg-darkCard border border-sky-300 dark:border-sky-700 rounded-lg px-2.5 py-2 text-[11px] font-mono text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-sky-500">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-600 dark:text-slate-300 mb-1">۲. شناسه عددی گیرنده قبض‌ها (Chat ID — به صورت خودکار پر می‌شود):</label>
+                            <input type="text" id="inp-bot-chatid" dir="ltr" placeholder="مثال: 123456789 (اگر خالی باشد به خودتان ارسال می‌شود)" class="w-full bg-slate-50 dark:bg-darkCard border border-slate-300 dark:border-darkBorder rounded-lg px-2.5 py-2 text-[11px] font-mono text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-sky-500">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-500 dark:text-slate-400 mb-1">۳. آدرس Webhook سرور اختیاری (در صورت داشتن سرور اختصاصی):</label>
+                            <input type="url" id="inp-bot-webhook" dir="ltr" placeholder="https://your-bot-server.com/api/gsmfix-webhook" class="w-full bg-slate-50 dark:bg-darkCard border border-slate-300 dark:border-darkBorder rounded-lg px-2.5 py-1.5 text-[11px] font-mono text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-sky-500">
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 pt-0.5">
+                            <button type="submit" class="bg-sky-600 hover:bg-sky-700 text-white font-bold text-[11px] py-2.5 rounded-lg transition-all shadow-sm">ذخیره تنظیمات</button>
+                            <button type="button" onclick="sendTestPayloadToTelegramBot()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-[11px] py-2.5 rounded-lg transition-all shadow-sm">تست ارسال پیام در چت ✈️</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- باکس فضای کاری تیمی و همکاران -->
                 <div class="bg-white dark:bg-darkSurface border border-indigo-200 dark:border-indigo-800/80 rounded-xl p-3.5 shadow-eu-card space-y-3 transition-colors">
                     <div class="flex justify-between items-center border-b border-slate-100 dark:border-darkBorder pb-2">
                         <div class="flex items-center gap-2">
@@ -623,17 +666,16 @@
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
                             </span>
                             <div>
-                                <h2 class="text-xs font-black text-slate-900 dark:text-white">فضای کاری مشترک آنلاین (دعوت همکاران)</h2>
-                                <span id="workspaceSyncStatusText" class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400">همگام‌سازی زنده کل داده‌ها فعال است</span>
+                                <h2 class="text-xs font-black text-slate-900 dark:text-white">فضای کاری و دعوت همکاران</h2>
+                                <span id="workspaceSyncStatusText" class="text-[10px] font-bold text-indigo-600 dark:text-indigo-400">ذخیره‌سازی پایدار در مرورگر و تلگرام</span>
                             </div>
                         </div>
-                        <span id="onlineMembersCountBadge" class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/70 text-euEmerald dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">1 عضو آنلاین</span>
+                        <span id="onlineMembersCountBadge" class="text-[10px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/70 text-euEmerald dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">1 عضو فعال</span>
                     </div>
 
-                    <!-- نمایش و کپی کد دعوت / شناسه فضای کاری -->
                     <div class="bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800/80 rounded-xl p-2.5 space-y-2">
                         <div class="flex items-center justify-between">
-                            <span class="text-[10px] font-bold text-indigo-900 dark:text-indigo-200">کد دعوت اختصاصی مجموعه شما:</span>
+                            <span class="text-[10px] font-bold text-indigo-900 dark:text-indigo-200">کد اختصاصی مجموعه شما:</span>
                             <span id="activeWorkspaceCodeDisplay" dir="ltr" class="font-mono font-black text-xs bg-white dark:bg-darkSurface text-indigo-600 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-700 px-2.5 py-0.5 rounded-lg select-all">GSM-MAIN</span>
                         </div>
                         <div class="grid grid-cols-2 gap-1.5">
@@ -646,64 +688,24 @@
                         </div>
                     </div>
 
-                    <!-- پیوستن همکار به فضای کاری (Join Workspace) -->
                     <form onsubmit="handleJoinWorkspace(event)" class="space-y-2 bg-slate-50 dark:bg-darkCard border border-slate-200 dark:border-darkBorder rounded-xl p-2.5">
-                        <label class="block text-[10px] font-extrabold text-slate-700 dark:text-slate-300">ورود همکار جدید یا اتصال به فضای کاری دیگر:</label>
+                        <label class="block text-[10px] font-extrabold text-slate-700 dark:text-slate-300">تغییر نام اپراتور پذیرش یا اتصال به کد مجموعه:</label>
                         <div class="grid grid-cols-2 gap-2">
                             <input type="text" id="inp-member-name" required placeholder="نام و نقش همکار (مثال: علی - پذیرش)" class="bg-white dark:bg-darkSurface border border-slate-300 dark:border-darkBorder rounded-lg px-2.5 py-1.5 text-[11px] text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-indigo-500">
                             <input type="text" id="inp-join-workspace-code" required dir="ltr" placeholder="کد اتاق (مثال: GSM-MAIN)" class="bg-white dark:bg-darkSurface border border-slate-300 dark:border-darkBorder rounded-lg px-2.5 py-1.5 text-[11px] font-mono uppercase text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-indigo-500">
                         </div>
                         <button type="submit" class="w-full bg-slate-800 dark:bg-indigo-600 hover:bg-slate-900 dark:hover:bg-indigo-700 text-white font-bold text-[11px] py-2 rounded-lg transition-all">
-                            اتصال و جوین شدن در فضای کاری آنلاین ✓
+                            ذخیره نام اپراتور و کد مجموعه ✓
                         </button>
                     </form>
 
-                    <!-- لیست همکاران عضو شده در این فضای کاری -->
                     <div class="space-y-1.5">
                         <div class="flex justify-between items-center">
-                            <span class="text-[10px] font-bold text-slate-500 dark:text-slate-400">همکاران متصل به این مجموعه:</span>
+                            <span class="text-[10px] font-bold text-slate-500 dark:text-slate-400">اپراتورهای ثبت‌شده در این مجموعه:</span>
                             <span id="currentOperatorBadge" class="text-[10px] font-bold text-euEmerald dark:text-emerald-400">شما: مدیر مجموعه</span>
                         </div>
                         <div id="workspaceMembersList" class="space-y-1.5 max-h-40 overflow-y-auto"></div>
                     </div>
-                </div>
-
-                <!-- باکس تنظیمات و اتصال به ربات تلگرام -->
-                <div class="bg-white dark:bg-darkSurface border border-sky-200 dark:border-sky-800/80 rounded-xl p-3.5 shadow-eu-card space-y-3 transition-colors">
-                    <div class="flex justify-between items-center border-b border-slate-100 dark:border-darkBorder pb-2">
-                        <div class="flex items-center gap-2">
-                            <span class="w-7 h-7 rounded-lg bg-sky-500 text-white flex items-center justify-center">
-                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
-                            </span>
-                            <div>
-                                <h2 class="text-xs font-black text-slate-900 dark:text-white">اتصال به ربات تلگرام (Telegram Bot)</h2>
-                                <span id="tgEnvStatusText" class="text-[10px] font-bold text-sky-600 dark:text-sky-400">در حال بررسی محیط تلگرام...</span>
-                            </div>
-                        </div>
-                        <span id="tgInitDataBadge" class="text-[9px] font-mono font-bold px-2 py-0.5 rounded bg-slate-100 dark:bg-darkCard text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-darkBorder">SDK Ready</span>
-                    </div>
-
-                    <div id="tgUserInfoCard" class="bg-slate-50 dark:bg-darkCard border border-slate-200 dark:border-darkBorder rounded-lg p-2.5 text-[11px] space-y-1">
-                        <div class="flex justify-between">
-                            <span class="text-slate-500 dark:text-slate-400">کاربر تلگرام:</span>
-                            <span id="tgFullUserLabel" class="font-bold text-slate-900 dark:text-white">باز شده در مرورگر (حالت پیش‌نمایش)</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-slate-500 dark:text-slate-400">شناسه عددی (User ID):</span>
-                            <span id="tgUserIdLabel" class="font-mono font-bold text-sky-600 dark:text-sky-400">-</span>
-                        </div>
-                    </div>
-
-                    <form onsubmit="saveTelegramBotConfig(event)" class="space-y-2">
-                        <div>
-                            <label class="block text-[10px] font-bold text-slate-600 dark:text-slate-300 mb-1">آدرس Webhook ربات یا سرور API (اختیاری - برای ارسال مستقیم POST):</label>
-                            <input type="url" id="inp-bot-webhook" dir="ltr" placeholder="https://your-bot-server.com/api/gsmfix-webhook" class="w-full bg-slate-50 dark:bg-darkCard border border-slate-300 dark:border-darkBorder rounded-lg px-2.5 py-2 text-[11px] font-mono text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-sky-500">
-                        </div>
-                        <div class="grid grid-cols-2 gap-2">
-                            <button type="submit" class="bg-sky-600 hover:bg-sky-700 text-white font-bold text-[11px] py-2 rounded-lg transition-all">ذخیره تنظیمات ربات</button>
-                            <button type="button" onclick="sendTestPayloadToTelegramBot()" class="bg-sky-50 dark:bg-sky-950/60 hover:bg-sky-100 border border-sky-200 dark:border-sky-800 text-sky-700 dark:text-sky-300 font-bold text-[11px] py-2 rounded-lg transition-all">تست ارسال به ربات ✈️</button>
-                        </div>
-                    </form>
                 </div>
 
                 <!-- بخش نرم‌افزار -->
@@ -918,7 +920,7 @@
                         <span id="sheetPasscode" class="font-mono font-semibold text-amber-700 dark:text-amber-400">-</span>
                     </div>
 
-                    <!-- بخش مدیریت مالی و وضعیت پرداخت در جزئیات پرونده -->
+                    <!-- بخش مدیریت مالی و وضعیت پرداخت -->
                     <div class="pt-2 border-t border-slate-200 dark:border-darkBorder space-y-2">
                         <div class="flex justify-between items-center">
                             <span class="text-slate-600 dark:text-slate-300 font-bold">هزینه کل (تومان):</span>
@@ -1059,7 +1061,7 @@
                 </div>
 
                 <div class="space-y-2 pt-1">
-                    <button onclick="sendOrderToTelegramBot(currentReceiptOrderId)" class="w-full bg-sky-600 hover:bg-sky-700 text-white font-extrabold py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-sm">
+                    <button id="sendReceiptBotBtn" onclick="sendOrderToTelegramBot(currentReceiptOrderId)" class="w-full bg-sky-600 hover:bg-sky-700 text-white font-extrabold py-2.5 rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-sm">
                         <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
                         <span>ارسال این قبض به ربات تلگرام</span>
                     </button>
@@ -1074,15 +1076,16 @@
         </div>
 
         <!-- ================= TOAST NOTIFICATION ================= -->
-        <div id="toast" class="fixed top-20 left-1/2 -translate-x-1/2 bg-euNavy dark:bg-slate-800 text-white font-bold text-xs px-4 py-2.5 rounded-full shadow-xl z-50 hidden items-center gap-2 whitespace-nowrap border border-slate-700">
-            <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+        <div id="toast" class="fixed top-20 left-1/2 -translate-x-1/2 bg-euNavy dark:bg-slate-800 text-white font-bold text-xs px-4 py-2.5 rounded-full shadow-xl z-50 hidden items-center gap-2 max-w-[92%] text-center border border-slate-700">
+            <span id="toastDot" class="w-2 h-2 rounded-full bg-emerald-400 shrink-0"></span>
             <span id="toastMessage">انجام شد</span>
         </div>
 
     </div>
 
-    <!-- ================= منطق جاوااسکریپت GSMFIX + Telegram Bot + Debtors ================= -->
+    <!-- ================= منطق جاوااسکریپت GSMFIX + Local & Telegram Cloud Persistence ================= -->
     <script>
+        const STORAGE_KEY = 'gsmfix_hub_state_v1';
         let isDarkMode = false;
 
         function applyTheme(dark, savePreference = true) {
@@ -1143,11 +1146,105 @@
             }
         }
 
-        // ================= اتصال به ربات تلگرام =================
+        // ================= ذخیره‌سازی پایدار در مرورگر و Telegram CloudStorage =================
+        function persistAppState() {
+            const statePayload = {
+                activeWorkspaceCode,
+                currentMemberProfile,
+                workspaceMembers,
+                hardwareTechnicians,
+                hardwareServicesList,
+                softwareServicesList,
+                orders,
+                updatedAt: Date.now()
+            };
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(statePayload));
+            } catch (e) {}
+
+            try {
+                if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.CloudStorage) {
+                    const cs = window.Telegram.WebApp.CloudStorage;
+                    cs.setItem('gsmfix_meta', JSON.stringify({
+                        activeWorkspaceCode,
+                        currentMemberProfile,
+                        hardwareTechnicians,
+                        hardwareServicesList,
+                        softwareServicesList
+                    }));
+                    cs.setItem('gsmfix_orders', JSON.stringify(orders.slice(0, 40)));
+                }
+            } catch (e) {}
+        }
+
+        function restoreAppState() {
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (raw) {
+                    const parsed = JSON.parse(raw);
+                    if (parsed.activeWorkspaceCode) activeWorkspaceCode = parsed.activeWorkspaceCode;
+                    if (parsed.currentMemberProfile) currentMemberProfile = parsed.currentMemberProfile;
+                    if (Array.isArray(parsed.workspaceMembers)) workspaceMembers = parsed.workspaceMembers;
+                    if (Array.isArray(parsed.hardwareTechnicians)) hardwareTechnicians = parsed.hardwareTechnicians;
+                    if (Array.isArray(parsed.hardwareServicesList)) hardwareServicesList = parsed.hardwareServicesList;
+                    if (Array.isArray(parsed.softwareServicesList)) softwareServicesList = parsed.softwareServicesList;
+                    if (Array.isArray(parsed.orders)) orders = parsed.orders;
+                }
+            } catch (e) {}
+
+            try {
+                if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.CloudStorage) {
+                    const cs = window.Telegram.WebApp.CloudStorage;
+                    cs.getItems(['gsmfix_meta', 'gsmfix_orders'], (err, values) => {
+                        if (!err && values) {
+                            let changed = false;
+                            if (values.gsmfix_meta) {
+                                try {
+                                    const m = JSON.parse(values.gsmfix_meta);
+                                    if (Array.isArray(m.hardwareTechnicians)) hardwareTechnicians = m.hardwareTechnicians;
+                                    if (Array.isArray(m.hardwareServicesList)) hardwareServicesList = m.hardwareServicesList;
+                                    if (Array.isArray(m.softwareServicesList)) softwareServicesList = m.softwareServicesList;
+                                    changed = true;
+                                } catch (e) {}
+                            }
+                            if (values.gsmfix_orders && !localStorage.getItem(STORAGE_KEY)) {
+                                try {
+                                    const cloudOrders = JSON.parse(values.gsmfix_orders);
+                                    if (Array.isArray(cloudOrders) && cloudOrders.length > 0) {
+                                        orders = cloudOrders;
+                                        changed = true;
+                                    }
+                                } catch (e) {}
+                            }
+                            if (changed) {
+                                refreshAllViews();
+                            }
+                        }
+                    });
+                }
+            } catch (e) {}
+        }
+
+        // ================= اتصال مستقیم و واقعی به ربات تلگرام =================
+        let telegramBotToken = '';
+        let telegramTargetChatId = '';
         let telegramBotWebhookUrl = '';
+
         try {
+            telegramBotToken = localStorage.getItem('gsmfix_bot_token') || '';
+            telegramTargetChatId = localStorage.getItem('gsmfix_bot_chatid') || '';
             telegramBotWebhookUrl = localStorage.getItem('gsmfix_bot_webhook') || '';
         } catch (e) {}
+
+        function updateBotBannerVisibility() {
+            const banner = document.getElementById('botTokenAlertBanner');
+            if (!banner) return;
+            if (telegramBotToken || telegramBotWebhookUrl) {
+                banner.classList.add('hidden');
+            } else {
+                banner.classList.remove('hidden');
+            }
+        }
 
         function getTelegramContext() {
             try {
@@ -1179,24 +1276,36 @@
             const badgeEl = document.getElementById('tgInitDataBadge');
             const fullUserEl = document.getElementById('tgFullUserLabel');
             const userIdEl = document.getElementById('tgUserIdLabel');
+            const tokenInp = document.getElementById('inp-bot-token');
+            const chatIdInp = document.getElementById('inp-bot-chatid');
             const webhookInp = document.getElementById('inp-bot-webhook');
 
-            if (webhookInp && telegramBotWebhookUrl) {
-                webhookInp.value = telegramBotWebhookUrl;
-            }
+            if (tokenInp && telegramBotToken) tokenInp.value = telegramBotToken;
+            if (webhookInp && telegramBotWebhookUrl) webhookInp.value = telegramBotWebhookUrl;
 
             if (ctx.user) {
                 const fullName = [ctx.user.first_name, ctx.user.last_name].filter(Boolean).join(' ');
                 const handle = ctx.user.username ? ` (@${ctx.user.username})` : '';
                 if (topNameEl) topNameEl.innerText = fullName || 'کاربر تلگرام';
-                if (envStatusEl) envStatusEl.innerText = `متصل به ربات تلگرام (${ctx.platform})`;
-                if (badgeEl) badgeEl.innerText = `v${ctx.version} • Connected`;
+                if (envStatusEl) envStatusEl.innerText = `متصل به تلگرام (${ctx.platform})`;
+                if (badgeEl) badgeEl.innerText = `v${ctx.version} • MiniApp`;
                 if (fullUserEl) fullUserEl.innerText = `${fullName}${handle}`;
                 if (userIdEl) userIdEl.innerText = String(ctx.user.id);
+
+                if (!telegramTargetChatId) {
+                    telegramTargetChatId = String(ctx.user.id);
+                    try { localStorage.setItem('gsmfix_bot_chatid', telegramTargetChatId); } catch (e) {}
+                }
             } else {
                 if (topNameEl) topNameEl.innerText = 'آماده اتصال به تلگرام';
-                if (envStatusEl) envStatusEl.innerText = 'آماده اتصال به ربات (باز شده در مرورگر)';
+                if (envStatusEl) envStatusEl.innerText = 'آماده اتصال مستقیم به ربات';
             }
+
+            if (chatIdInp && telegramTargetChatId) {
+                chatIdInp.value = telegramTargetChatId;
+            }
+
+            updateBotBannerVisibility();
 
             try {
                 if (window.Telegram && window.Telegram.WebApp) {
@@ -1214,13 +1323,62 @@
 
         function saveTelegramBotConfig(e) {
             e.preventDefault();
-            const val = (document.getElementById('inp-bot-webhook')?.value || '').trim();
-            telegramBotWebhookUrl = val;
+            const tokenVal = (document.getElementById('inp-bot-token')?.value || '').trim();
+            const chatVal = (document.getElementById('inp-bot-chatid')?.value || '').trim();
+            const webhookVal = (document.getElementById('inp-bot-webhook')?.value || '').trim();
+
+            const ctx = getTelegramContext();
+            const finalChatId = chatVal || (ctx.user ? String(ctx.user.id) : '');
+
+            telegramBotToken = tokenVal;
+            telegramTargetChatId = finalChatId;
+            telegramBotWebhookUrl = webhookVal;
+
             try {
-                localStorage.setItem('gsmfix_bot_webhook', val);
+                localStorage.setItem('gsmfix_bot_token', tokenVal);
+                localStorage.setItem('gsmfix_bot_chatid', finalChatId);
+                localStorage.setItem('gsmfix_bot_webhook', webhookVal);
             } catch (err) {}
+
+            if (document.getElementById('inp-bot-chatid')) {
+                document.getElementById('inp-bot-chatid').value = finalChatId;
+            }
+
+            updateBotBannerVisibility();
+            persistAppState();
             triggerHaptic('medium');
-            showToast('تنظیمات اتصال به ربات تلگرام ذخیره شد');
+            showToast('تنظیمات ربات تلگرام ذخیره شد ✓');
+        }
+
+        function formatHtmlReceiptForTelegram(actionType, data) {
+            if (actionType === 'PING_TEST') {
+                return `✅ <b>تست اتصال مینی‌اپ GSMFIX موفقیت‌آمیز بود!</b>\n` +
+                    `📊 تعداد کل پرونده‌های فعلی: <b>${data.totalOrders || 0}</b>\n` +
+                    `🚀 ارسال مستقیم قبض‌ها فعال است.`;
+            }
+
+            const titles = {
+                'NEW_ORDER_CREATED': '🆕 <b>پذیرش جدید در GSMFIX ثبت شد</b>',
+                'ORDER_STATUS_UPDATED': '🔄 <b>وضعیت پرونده به‌روزرسانی شد</b>',
+                'ORDER_RECEIPT': '🧾 <b>قبض پذیرش دیجیتال GSMFIX</b>'
+            };
+            const header = titles[actionType] || '📌 <b>گزارش پرونده GSMFIX</b>';
+            const fin = getOrderFinance(data);
+            const servicesText = Array.isArray(data.services) ? data.services.join('، ') : '-';
+
+            return `${header}\n` +
+                `━━━━━━━━━━━━━━━━━━\n` +
+                `🔖 کد پیگیری: <code>${data.code || '-'}</code>\n` +
+                `📱 دستگاه: <b>${data.model || '-'}</b> (${data.specs || '-'})\n` +
+                `👤 مشتری: <b>${data.customer || '-'}</b> (<code>${data.phone || '-'}</code>)\n` +
+                `🛠️ خدمات: ${servicesText}\n` +
+                `👨‍🔧 مسئول: <b>${data.technician || '-'}</b>\n` +
+                `📅 ورود: ${data.entryDate || '-'} | تحویل: ${data.exitDate || '-'}\n` +
+                `⚙️ وضعیت تعمیر: <b>${data.status || '-'}</b>\n` +
+                `💳 مبلغ کل: <b>${fin.total.toLocaleString('fa-IR')} تومان</b>\n` +
+                `💰 وضعیت مالی: <b>${fin.status}</b>\n` +
+                `🔸 مانده بدهی: <b>${fin.remaining.toLocaleString('fa-IR')} تومان</b>\n` +
+                `━━━━━━━━━━━━━━━━━━`;
         }
 
         async function dispatchPayloadToBot(actionType, payloadData) {
@@ -1234,73 +1392,96 @@
                 data: payloadData
             };
 
-            let sentViaSdk = false;
+            let sentViaDirectBotApi = false;
             let sentViaWebhook = false;
+            let errorDetail = '';
 
-            try {
-                if (window.Telegram && window.Telegram.WebApp && typeof window.Telegram.WebApp.sendData === 'function' && window.Telegram.WebApp.initData) {
-                    window.Telegram.WebApp.sendData(JSON.stringify(envelope));
-                    sentViaSdk = true;
+            const targetChat = telegramTargetChatId || (ctx.user ? String(ctx.user.id) : '');
+            if (telegramBotToken && targetChat) {
+                try {
+                    const htmlMessage = formatHtmlReceiptForTelegram(actionType, payloadData);
+                    const apiRes = await fetch(`https://api.telegram.org/bot${telegramBotToken}/sendMessage`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            chat_id: targetChat,
+                            text: htmlMessage,
+                            parse_mode: 'HTML'
+                        })
+                    });
+                    const apiJson = await apiRes.json();
+                    if (apiJson && apiJson.ok) {
+                        sentViaDirectBotApi = true;
+                    } else {
+                        errorDetail = apiJson?.description || 'خطا در توکن ربات یا شناسه چت';
+                    }
+                } catch (err) {
+                    errorDetail = 'خطا در اتصال به سرور تلگرام';
                 }
-            } catch (e) {}
+            }
 
             if (telegramBotWebhookUrl) {
                 try {
-                    await fetch(telegramBotWebhookUrl, {
+                    const whRes = await fetch(telegramBotWebhookUrl, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(envelope)
                     });
-                    sentViaWebhook = true;
+                    if (whRes.ok) sentViaWebhook = true;
                 } catch (err) {}
             }
 
-            return { sentViaSdk, sentViaWebhook, envelope };
+            return {
+                success: sentViaDirectBotApi || sentViaWebhook,
+                sentViaDirectBotApi,
+                sentViaWebhook,
+                errorDetail,
+                hasConfig: Boolean((telegramBotToken && targetChat) || telegramBotWebhookUrl)
+            };
         }
 
         async function sendOrderToTelegramBot(orderId) {
             const order = orders.find(o => o.id === orderId);
             if (!order) return;
             triggerHaptic('medium');
-            const fin = getOrderFinance(order);
 
-            const res = await dispatchPayloadToBot('ORDER_RECEIPT', {
-                code: order.code,
-                category: order.category,
-                model: order.model,
-                specs: order.specs,
-                customer: order.customer,
-                phone: order.phone,
-                imei: order.imei,
-                technician: order.technician,
-                services: order.services,
-                status: order.status,
-                entryDate: order.entryDate,
-                exitDate: order.exitDate,
-                cost: fin.total,
-                paymentStatus: fin.status,
-                paidAmount: fin.paid,
-                remainingDebt: fin.remaining,
-                receiptText: buildCustomerMessage(order)
-            });
+            const btn = document.getElementById('sendReceiptBotBtn');
+            const origHtml = btn ? btn.innerHTML : '';
+            if (btn) {
+                btn.disabled = true;
+                btn.innerHTML = '<span>در حال ارسال به تلگرام...</span>';
+            }
 
-            if (res.sentViaSdk || res.sentViaWebhook) {
-                showToast('گزارش پرونده با موفقیت به ربات تلگرام ارسال شد ✈️');
+            const res = await dispatchPayloadToBot('ORDER_RECEIPT', order);
+
+            if (btn) {
+                btn.disabled = false;
+                btn.innerHTML = origHtml;
+            }
+
+            if (res.success) {
+                showToast('قبض با موفقیت به چت ربات تلگرام ارسال شد ✅');
+            } else if (!res.hasConfig) {
+                showToast('ابتدا توکن ربات را در تب «مدیریت» وارد کنید! متن قبض کپی شد.', true);
+                copyDigitalReceiptText();
+                closeReceiptModal();
+                navigateTo('management');
             } else {
-                copyTextSafe(buildCustomerMessage(order), 'متن گزارش برای ارسال به ربات کپی شد ✈️');
+                showToast(`ارسال ناموفق: ${res.errorDetail || 'توکن ربات را بررسی کنید'}`, true);
             }
         }
 
         async function sendTestPayloadToTelegramBot() {
             triggerHaptic('medium');
             const res = await dispatchPayloadToBot('PING_TEST', {
-                message: 'تست اتصال مینی‌اپ GSMFIX به ربات تلگرام',
                 totalOrders: orders.length
             });
-            if (res.sentViaSdk || res.sentViaWebhook) {
-                showToast('سیگنال تست به ربات تلگرام ارسال شد ✓');
+            if (res.success) {
+                showToast('پیام تست به چت تلگرام شما ارسال شد ✅');
+            } else if (!res.hasConfig) {
+                showToast('لطفاً ابتدا Bot Token و Chat ID را در کادر بالا وارد و ذخیره کنید', true);
             } else {
-                showToast('مینی‌اپ آماده است (برای تست خارج از ربات، آدرس Webhook را وارد کنید)');
+                showToast(`خطا در ارسال: ${res.errorDetail}`, true);
             }
         }
 
@@ -1394,10 +1575,10 @@
         let currentChecklistState = {};
         let selectedPatternPoints = [];
 
-        // ================= مدیریت فضای کاری آنلاین و همکاران =================
+        // ================= مدیریت فضای کاری و اپراتورها =================
         let activeWorkspaceCode = 'GSM-MAIN';
         let currentMemberProfile = {
-            id: 'op_' + Math.random().toString(36).substring(2, 9),
+            id: 'op_main',
             name: 'مدیر مجموعه',
             role: 'مدیر کل'
         };
@@ -1420,7 +1601,7 @@
             const tgCtx = getTelegramContext();
             if (tgCtx.user) {
                 const fullName = [tgCtx.user.first_name, tgCtx.user.last_name].filter(Boolean).join(' ');
-                if (fullName) {
+                if (fullName && currentMemberProfile.name === 'مدیر مجموعه') {
                     currentMemberProfile.name = fullName;
                     currentMemberProfile.id = 'tg_' + tgCtx.user.id;
                 }
@@ -1430,24 +1611,26 @@
             const joinInp = document.getElementById('inp-join-workspace-code');
             const nameInp = document.getElementById('inp-member-name');
             const opBadge = document.getElementById('currentOperatorBadge');
+            const cloudText = document.getElementById('cloudStatusText');
             if (codeDisplay) codeDisplay.innerText = activeWorkspaceCode;
             if (joinInp) joinInp.value = activeWorkspaceCode;
             if (nameInp) nameInp.value = currentMemberProfile.name;
             if (opBadge) opBadge.innerText = `شما: ${currentMemberProfile.name}`;
+            if (cloudText) cloudText.innerText = `ذخیره خودکار • ${activeWorkspaceCode}`;
         }
 
         function copyWorkspaceInviteLink() {
             const baseUrl = window.location.origin + window.location.pathname;
             const inviteUrl = `${baseUrl}?join=${encodeURIComponent(activeWorkspaceCode)}`;
-            const inviteMsg = `سلام همکار عزیز؛\nبرای اتصال آنلاین به پنل پذیرش و تعمیرات GSMFIX روی لینک زیر بزنید:\n🔗 ${inviteUrl}\n🔑 کد اتاق مشترک: ${activeWorkspaceCode}`;
+            const inviteMsg = `سلام همکار عزیز؛\nبرای ورود به پنل پذیرش و تعمیرات GSMFIX روی لینک زیر بزنید:\n🔗 ${inviteUrl}\n🔑 کد مجموعه: ${activeWorkspaceCode}`;
             copyTextSafe(inviteMsg, 'لینک و کد دعوت همکار کپی شد!');
         }
 
         function copyWorkspaceCodeOnly() {
-            copyTextSafe(activeWorkspaceCode, `کد اتاق ${activeWorkspaceCode} کپی شد!`);
+            copyTextSafe(activeWorkspaceCode, `کد مجموعه ${activeWorkspaceCode} کپی شد!`);
         }
 
-        async function handleJoinWorkspace(e) {
+        function handleJoinWorkspace(e) {
             e.preventDefault();
             triggerHaptic('medium');
             const nameVal = (document.getElementById('inp-member-name')?.value || '').trim();
@@ -1455,19 +1638,26 @@
             if (!nameVal || !codeVal) return;
 
             currentMemberProfile.name = nameVal;
-            const isSwitchingRoom = codeVal !== activeWorkspaceCode;
             activeWorkspaceCode = codeVal;
+
+            if (!workspaceMembers.some(m => m.name === nameVal)) {
+                workspaceMembers.push({
+                    id: 'op_' + Date.now(),
+                    name: nameVal,
+                    role: 'اپراتور پذیرش'
+                });
+            }
 
             const codeDisplay = document.getElementById('activeWorkspaceCodeDisplay');
             const opBadge = document.getElementById('currentOperatorBadge');
+            const cloudText = document.getElementById('cloudStatusText');
             if (codeDisplay) codeDisplay.innerText = activeWorkspaceCode;
             if (opBadge) opBadge.innerText = `شما: ${currentMemberProfile.name}`;
+            if (cloudText) cloudText.innerText = `ذخیره خودکار • ${activeWorkspaceCode}`;
 
-            if (window.cloudSync && window.cloudSync.switchWorkspace) {
-                await window.cloudSync.switchWorkspace(activeWorkspaceCode, currentMemberProfile, isSwitchingRoom);
-            }
+            persistAppState();
             renderWorkspaceMembersUI();
-            showToast(`با نام «${nameVal}» به اتاق ${activeWorkspaceCode} متصل شدید ✓`);
+            showToast(`نام اپراتور «${nameVal}» در اتاق ${activeWorkspaceCode} ثبت شد ✓`);
         }
 
         function renderWorkspaceMembersUI() {
@@ -1478,8 +1668,7 @@
             const mergedMap = new Map();
             mergedMap.set(currentMemberProfile.id, {
                 ...currentMemberProfile,
-                online: true,
-                lastSeen: Date.now()
+                online: true
             });
             workspaceMembers.forEach(m => {
                 if (m && m.id) {
@@ -1489,7 +1678,7 @@
 
             const allMembers = Array.from(mergedMap.values());
             if (countBadge) {
-                countBadge.innerText = `${allMembers.length} همکار متصل`;
+                countBadge.innerText = `${allMembers.length} عضو فعال`;
             }
 
             listEl.innerHTML = allMembers.map(m => {
@@ -1497,13 +1686,13 @@
                 return `
                     <div class="bg-slate-50 dark:bg-darkCard border border-slate-200 dark:border-darkBorder rounded-lg px-2.5 py-2 flex items-center justify-between">
                         <div class="flex items-center gap-2">
-                            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
                             <div>
                                 <span class="text-xs font-extrabold text-slate-900 dark:text-white">${m.name}</span>
                                 ${isMe ? '<span class="text-[9px] font-bold bg-indigo-100 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 px-1.5 py-0.5 rounded mr-1">شما</span>' : ''}
                             </div>
                         </div>
-                        <span class="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 font-bold">آنلاین</span>
+                        <span class="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 font-bold">فعال</span>
                     </div>
                 `;
             }).join('');
@@ -2143,11 +2332,17 @@
             };
 
             orders.unshift(newOrder);
-            if (window.cloudSync) {
-                await window.cloudSync.saveOrder(newOrder);
-            }
+            persistAppState();
+
             if (autoSendBot) {
-                await dispatchPayloadToBot('NEW_ORDER_CREATED', newOrder);
+                const botRes = await dispatchPayloadToBot('NEW_ORDER_CREATED', newOrder);
+                if (botRes.success) {
+                    showToast(`سفارش ${model} ثبت و قبض به تلگرام ارسال شد ✅`);
+                } else {
+                    showToast(`سفارش ${model} (${code}) ثبت شد!`);
+                }
+            } else {
+                showToast(`سفارش ${model} (${code}) ثبت شد!`);
             }
 
             document.getElementById('receptionForm').reset();
@@ -2159,7 +2354,6 @@
             document.getElementById('inp-entry-date').value = getPersianDateString(0);
             document.getElementById('inp-exit-date').value = getPersianDateString(2);
             
-            showToast(`سفارش ${model} (${code}) ثبت شد!`);
             renderDashboard();
             navigateTo(isHw ? 'hardware' : 'software');
             openReceiptModal(newOrder.id);
@@ -2376,16 +2570,15 @@
             }).join('');
         }
 
-        async function settleOrderFullPayment(id) {
+        function settleOrderFullPayment(id) {
             if (!id) return;
             const order = orders.find(o => o.id === id);
             if (!order) return;
             triggerHaptic('medium');
             order.paymentStatus = 'تسویه کامل';
             order.paidAmount = Number(order.cost) || 0;
-            if (window.cloudSync) {
-                await window.cloudSync.saveOrder(order);
-            }
+            persistAppState();
+
             if (activeOrderId === id) {
                 openOrderDetails(id);
             }
@@ -2453,7 +2646,7 @@
             document.getElementById('detailsSheet').classList.remove('hidden');
         }
 
-        async function saveUpdatedOrderFinance() {
+        function saveUpdatedOrderFinance() {
             if (!activeOrderId) return;
             const order = orders.find(o => o.id === activeOrderId);
             if (!order) return;
@@ -2470,15 +2663,13 @@
             order.cost = newTotal;
             order.paymentStatus = newStatus;
             order.paidAmount = newPaid;
+            persistAppState();
 
             const fin = getOrderFinance(order);
             document.getElementById('sheetEditPaidInput').value = fin.paid;
             document.getElementById('sheetRemainingDebtDisplay').innerText = formatToman(fin.remaining);
             document.getElementById('sheetWhatsappBtn').href = buildWhatsappUrl(order.phone, buildCustomerMessage(order));
 
-            if (window.cloudSync) {
-                await window.cloudSync.saveOrder(order);
-            }
             renderDashboard();
             renderDebtorsList();
             renderHardwareList();
@@ -2509,7 +2700,7 @@
             }
         }
 
-        async function toggleOrderPartChecklist(partKey) {
+        function toggleOrderPartChecklist(partKey) {
             if (!activeOrderId) return;
             const order = orders.find(o => o.id === activeOrderId);
             if (!order || !order.checklist) return;
@@ -2517,10 +2708,8 @@
             const states = ['untested', 'ok', 'faulty'];
             const cur = order.checklist[partKey] || 'untested';
             order.checklist[partKey] = states[(states.indexOf(cur) + 1) % states.length];
+            persistAppState();
             renderSheetChecklist(order);
-            if (window.cloudSync) {
-                await window.cloudSync.saveOrder(order);
-            }
             showToast('چک‌لیست قطعه به‌روزرسانی شد');
         }
 
@@ -2531,7 +2720,7 @@
             copyTextSafe(buildCustomerMessage(order), 'متن پیام وضعیت کپی شد!');
         }
 
-        async function requestDeleteActiveOrder() {
+        function requestDeleteActiveOrder() {
             if (!activeOrderId) return;
             const btn = document.getElementById('deleteOrderBtn');
             if (!deleteConfirmPending) {
@@ -2542,10 +2731,8 @@
             }
             const idToDelete = activeOrderId;
             orders = orders.filter(o => o.id !== idToDelete);
+            persistAppState();
             closeDetailsSheet();
-            if (window.cloudSync) {
-                await window.cloudSync.deleteOrder(idToDelete);
-            }
             renderDashboard();
             renderDebtorsList();
             renderHardwareList();
@@ -2565,9 +2752,7 @@
             if (idx !== -1) {
                 orders[idx].status = newStatus;
                 const updatedOrder = { ...orders[idx] };
-                if (window.cloudSync) {
-                    await window.cloudSync.saveOrder(updatedOrder);
-                }
+                persistAppState();
                 await dispatchPayloadToBot('ORDER_STATUS_UPDATED', updatedOrder);
                 showToast(`وضعیت به «${newStatus}» تغییر یافت`);
                 closeDetailsSheet();
@@ -2683,7 +2868,7 @@
             renderMgmtServicesList();
         }
 
-        async function addNewHwTech(e) {
+        function addNewHwTech(e) {
             e.preventDefault();
             const inp = document.getElementById('newTechName');
             const name = inp.value.trim();
@@ -2691,9 +2876,7 @@
             if (!hardwareTechnicians.includes(name)) {
                 hardwareTechnicians.push(name);
                 inp.value = '';
-                if (window.cloudSync) {
-                    await window.cloudSync.saveConfig();
-                }
+                persistAppState();
                 renderManagement();
                 showToast(`مهندس ${name} اضافه شد`);
             }
@@ -2736,21 +2919,19 @@
             `).join('');
         }
 
-        async function removeServiceItem(id) {
+        function removeServiceItem(id) {
             if (mgmtServiceTab === 'hardware') {
                 hardwareServicesList = hardwareServicesList.filter(s => s.id !== id);
             } else {
                 softwareServicesList = softwareServicesList.filter(s => s.id !== id);
             }
-            if (window.cloudSync) {
-                await window.cloudSync.saveConfig();
-            }
+            persistAppState();
             renderMgmtServicesList();
             renderManagement();
             showToast('سرویس از کاتالوگ حذف شد');
         }
 
-        async function addNewServiceItem(e) {
+        function addNewServiceItem(e) {
             e.preventDefault();
             const titleInp = document.getElementById('newSrvTitle');
             const priceInp = document.getElementById('newSrvPrice');
@@ -2772,9 +2953,7 @@
 
             titleInp.value = '';
             priceInp.value = '';
-            if (window.cloudSync) {
-                await window.cloudSync.saveConfig();
-            }
+            persistAppState();
             renderManagement();
             showToast('سرویس جدید به کاتالوگ اضافه شد');
         }
@@ -2804,32 +2983,25 @@
             const file = event.target.files?.[0];
             if (!file) return;
             const reader = new FileReader();
-            reader.onload = async function(e) {
+            reader.onload = function(e) {
                 try {
                     const data = JSON.parse(e.target.result);
                     if (Array.isArray(data.orders)) orders = data.orders;
                     if (Array.isArray(data.hardwareTechnicians)) hardwareTechnicians = data.hardwareTechnicians;
                     if (Array.isArray(data.hardwareServicesList)) hardwareServicesList = data.hardwareServicesList;
                     if (Array.isArray(data.softwareServicesList)) softwareServicesList = data.softwareServicesList;
-                    if (window.cloudSync) {
-                        await window.cloudSync.saveConfig();
-                        for (const ord of orders) {
-                            await window.cloudSync.saveOrder(ord);
-                        }
-                    }
-                    renderDashboard();
-                    renderDebtorsList();
-                    renderManagement();
-                    showToast('اطلاعات بازیابی و در فضای ابری ذخیره شد');
+                    persistAppState();
+                    refreshAllViews();
+                    showToast('اطلاعات پشتیبان با موفقیت بازیابی شد ✓');
                 } catch (err) {
-                    showToast('فایل پشتیبان معتبر نیست');
+                    showToast('فایل پشتیبان معتبر نیست', true);
                 }
             };
             reader.readAsText(file);
             event.target.value = '';
         }
 
-        window.refreshAllViewsFromCloud = function() {
+        function refreshAllViews() {
             renderDashboard();
             if (!document.getElementById('view-hardware').classList.contains('hidden')) renderHardwareList();
             if (!document.getElementById('view-software').classList.contains('hidden')) renderSoftwareList();
@@ -2839,205 +3011,34 @@
                 populateHwTechDropdown();
                 renderReceptionServicesChips();
             }
-        };
+        }
 
-        function showToast(msg) {
+        function showToast(msg, isWarning = false) {
             const toast = document.getElementById('toast');
+            const dot = document.getElementById('toastDot');
             document.getElementById('toastMessage').innerText = msg;
+            if (dot) {
+                dot.className = isWarning
+                    ? 'w-2 h-2 rounded-full bg-amber-400 shrink-0'
+                    : 'w-2 h-2 rounded-full bg-emerald-400 shrink-0';
+            }
             toast.classList.remove('hidden');
             toast.classList.add('flex');
             setTimeout(() => {
                 toast.classList.add('hidden');
                 toast.classList.remove('flex');
-            }, 2800);
+            }, 3400);
         }
 
         window.addEventListener('DOMContentLoaded', () => {
             initThemeOnLoad();
+            restoreAppState();
             initTelegramIntegration();
             initWorkspaceFromUrlOrMemory();
             document.getElementById('headerPersianDate').innerText = getPersianDateString(0);
             renderDashboard();
             initReceptionForm();
         });
-    </script>
-
-    <!-- ================= ماژول همگام‌سازی ابری لحظه‌ای و فضای کاری تیمی ================= -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, setDoc, deleteDoc, onSnapshot, collection } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
-
-        function setCloudBadge(connected) {
-            const badge = document.getElementById('cloudStatusBadge');
-            const dot = document.getElementById('cloudStatusDot');
-            const text = document.getElementById('cloudStatusText');
-            if (!badge || !dot || !text) return;
-
-            if (connected) {
-                badge.className = 'flex items-center gap-1 bg-emerald-500/20 border border-emerald-500/40 px-2 py-0.5 rounded-full shrink-0';
-                dot.className = 'w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse';
-                text.className = 'text-[9px] font-bold text-emerald-300';
-                text.innerText = `آنلاین • ${activeWorkspaceCode}`;
-            } else {
-                badge.className = 'flex items-center gap-1 bg-slate-800 border border-slate-700 px-2 py-0.5 rounded-full shrink-0';
-                dot.className = 'w-1.5 h-1.5 rounded-full bg-slate-400';
-                text.className = 'text-[9px] font-bold text-slate-300';
-                text.innerText = 'آفلاین';
-            }
-        }
-
-        async function initCloudStorage() {
-            try {
-                if (typeof __firebase_config === 'undefined') {
-                    setCloudBadge(false);
-                    return;
-                }
-
-                const appId = typeof __app_id !== 'undefined' ? __app_id : 'gsmfix-default-app';
-                const firebaseConfig = JSON.parse(__firebase_config);
-                const app = initializeApp(firebaseConfig);
-                const auth = getAuth(app);
-                const db = getFirestore(app);
-
-                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-                    await signInWithCustomToken(auth, __initial_auth_token);
-                } else {
-                    await signInAnonymously(auth);
-                }
-
-                const currentUser = auth.currentUser;
-                if (!currentUser) {
-                    setCloudBadge(false);
-                    return;
-                }
-
-                let unsubConfig = null;
-                let unsubOrders = null;
-                let unsubMembers = null;
-
-                function bindWorkspaceListeners(wsCode, seedIfEmpty = true) {
-                    if (unsubConfig) unsubConfig();
-                    if (unsubOrders) unsubOrders();
-                    if (unsubMembers) unsubMembers();
-
-                    const safeWs = (wsCode || 'GSM-MAIN').replace(/[^A-Z0-9_-]/gi, '').toUpperCase() || 'GSM-MAIN';
-                    const ordersColRef = collection(db, 'artifacts', appId, 'public', 'data', `gsmfix_orders_${safeWs}`);
-                    const membersColRef = collection(db, 'artifacts', appId, 'public', 'data', `gsmfix_members_${safeWs}`);
-                    const configDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'gsmfix_config', safeWs);
-
-                    window.cloudSync = {
-                        saveOrder: async (orderObj) => {
-                            if (!auth.currentUser) return;
-                            try {
-                                const orderRef = doc(db, 'artifacts', appId, 'public', 'data', `gsmfix_orders_${safeWs}`, String(orderObj.id));
-                                await setDoc(orderRef, orderObj);
-                            } catch (err) {
-                                console.error('Error saving order:', err);
-                            }
-                        },
-                        deleteOrder: async (orderId) => {
-                            if (!auth.currentUser) return;
-                            try {
-                                const orderRef = doc(db, 'artifacts', appId, 'public', 'data', `gsmfix_orders_${safeWs}`, String(orderId));
-                                await deleteDoc(orderRef);
-                            } catch (err) {
-                                console.error('Error deleting order:', err);
-                            }
-                        },
-                        saveConfig: async () => {
-                            if (!auth.currentUser) return;
-                            try {
-                                await setDoc(configDocRef, {
-                                    hardwareTechnicians,
-                                    hardwareServicesList,
-                                    softwareServicesList,
-                                    updatedAt: Date.now()
-                                });
-                            } catch (err) {
-                                console.error('Error saving config:', err);
-                            }
-                        },
-                        registerMemberPresence: async (memberObj) => {
-                            if (!auth.currentUser || !memberObj) return;
-                            try {
-                                const mRef = doc(db, 'artifacts', appId, 'public', 'data', `gsmfix_members_${safeWs}`, String(memberObj.id));
-                                await setDoc(mRef, {
-                                    id: memberObj.id,
-                                    name: memberObj.name,
-                                    role: memberObj.role || 'همکار',
-                                    lastSeen: Date.now()
-                                });
-                            } catch (err) {
-                                console.error('Error registering member:', err);
-                            }
-                        },
-                        switchWorkspace: async (newWsCode, memberObj, isNewRoom) => {
-                            bindWorkspaceListeners(newWsCode, !isNewRoom);
-                            await window.cloudSync.registerMemberPresence(memberObj);
-                        }
-                    };
-
-                    window.cloudSync.registerMemberPresence(currentMemberProfile);
-
-                    unsubMembers = onSnapshot(membersColRef, (snap) => {
-                        const list = [];
-                        snap.forEach((docSnap) => {
-                            list.push(docSnap.data());
-                        });
-                        workspaceMembers = list;
-                        renderWorkspaceMembersUI();
-                    }, (err) => {
-                        console.error('Members sync error:', err);
-                    });
-
-                    unsubConfig = onSnapshot(configDocRef, async (snap) => {
-                        if (snap.exists()) {
-                            const data = snap.data();
-                            if (Array.isArray(data.hardwareTechnicians)) hardwareTechnicians = data.hardwareTechnicians;
-                            if (Array.isArray(data.hardwareServicesList)) hardwareServicesList = data.hardwareServicesList;
-                            if (Array.isArray(data.softwareServicesList)) softwareServicesList = data.softwareServicesList;
-                            if (window.refreshAllViewsFromCloud) window.refreshAllViewsFromCloud();
-                        } else {
-                            await window.cloudSync.saveConfig();
-                        }
-                    }, (error) => {
-                        console.error('Config sync error:', error);
-                    });
-
-                    let seededInitialOrders = false;
-                    unsubOrders = onSnapshot(ordersColRef, async (snapshot) => {
-                        setCloudBadge(true);
-                        if (snapshot.empty && !seededInitialOrders && seedIfEmpty && safeWs === 'GSM-MAIN') {
-                            seededInitialOrders = true;
-                            for (const sampleOrder of orders) {
-                                await window.cloudSync.saveOrder(sampleOrder);
-                            }
-                            return;
-                        }
-                        seededInitialOrders = true;
-                        const cloudOrders = [];
-                        snapshot.forEach((docSnap) => {
-                            cloudOrders.push(docSnap.data());
-                        });
-                        cloudOrders.sort((a, b) => (Number(b.id) || 0) - (Number(a.id) || 0));
-                        orders = cloudOrders;
-                        if (window.refreshAllViewsFromCloud) window.refreshAllViewsFromCloud();
-                    }, (error) => {
-                        console.error('Orders sync error:', error);
-                        setCloudBadge(false);
-                    });
-                }
-
-                bindWorkspaceListeners(activeWorkspaceCode, true);
-
-            } catch (err) {
-                console.error('Cloud init failed:', err);
-                setCloudBadge(false);
-            }
-        }
-
-        initCloudStorage();
     </script>
 </body>
 </html>
